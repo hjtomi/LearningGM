@@ -1,9 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"obj_hitbox_stair",
+  "%Name":"obj_hitbox_level_under_1",
   "eventList":[],
   "managed":true,
-  "name":"obj_hitbox_stair",
+  "name":"obj_hitbox_level_under_1",
   "overriddenProperties":[],
   "parent":{
     "name":"Level",

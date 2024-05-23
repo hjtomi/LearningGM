@@ -43,6 +43,154 @@ var _yinput = s_held - w_held;
 
 if is_warrior
 {
+	#region depth
+	// DEPTH
+	
+	depth = -y;
+	
+	// Stairs
+	var _stair = instance_place(x,y, obj_hitbox_stair);
+	if _stair != noone
+	{
+		on_stairs = _stair.level;
+	}
+	else
+	{
+		on_stairs = 0;
+	}
+	
+	// Surface
+	var _surface1 = instance_place(x, y, obj_hitbox_level_surface_1);
+	var _surface2 = instance_place(x, y, obj_hitbox_level_surface_2);
+	var _surface3 = instance_place(x, y, obj_hitbox_level_surface_3);
+
+	// up
+	if p_on_stairs == 1
+	{
+		if _surface1 != noone
+		{
+			on_level = 1;
+		}
+	}
+	
+	else if p_on_stairs == 2
+	{
+		if _surface2 != noone
+		{
+			on_level = 2;
+		}
+	}
+	
+	else if p_on_stairs == 3
+	{
+		if _surface3 != noone
+		{
+			on_level = 3;
+		}
+	}
+	
+	// down
+	if p_on_level == 1
+	{
+		if _surface1 == noone
+		{
+			on_level = 0;
+		}
+	}
+	
+	else if p_on_level == 2
+	{
+		if _surface2 == noone
+		{
+			on_level = 1;
+		}
+	}
+	
+	else if p_on_level == 3
+	{
+		if _surface3 == noone
+		{
+			on_level = 2;
+		}
+	}
+	
+	// Wall
+	array_pop(objects_to_collide_with);
+	if on_level == 0
+	{
+		array_push(objects_to_collide_with, obj_hitbox_level_wall_1);
+	}
+	else if on_level == 1
+	{
+		array_push(objects_to_collide_with, obj_hitbox_level_wall_2);
+	}
+	else if on_level == 2
+	{
+		array_push(objects_to_collide_with, obj_hitbox_level_wall_3);
+	}
+	objects_to_collide_with = array_unique(objects_to_collide_with);
+	
+	// Under
+	var _under1 = instance_place(x, y, obj_hitbox_level_under_1)
+	var _under2 = instance_place(x, y, obj_hitbox_level_under_2)
+	var _under3 = instance_place(x, y, obj_hitbox_level_under_3)
+	
+	if on_level == 0 and _under1 != noone
+	{
+		depth += 3 * 64
+	}
+	
+	if on_level == 1 and _under2 != noone
+	{
+		depth += 2 * 64
+	}
+	
+	if on_level == 2 and _under3 != noone
+	{
+		depth += 64
+	}
+	
+	// Falling off
+	if p_on_level == on_level + 1
+	{
+		if  on_stairs == 0
+		{
+			falling = true;
+			can_move = false;
+		}
+		else if on_stairs != 0 and is_touching_wall()
+		{
+			falling = true;
+			can_move = false;
+		}
+	}
+	
+	if falling
+	{
+		can_move = false;
+		y += 8;
+		fall_counter += 8;
+		
+		if fall_counter == 64
+		{
+			
+			if is_touching_wall()
+			{
+				y -= 16;
+			}
+			
+			falling = false;
+			fall_counter = 0;
+			can_move = true;
+		}
+	}
+	
+	show_debug_message("y: {0}\ndepth: {1}\non_stairs: {2}\non_level: {3}\n", y, depth, on_stairs, on_level);
+	
+	#endregion
+	
+	// MOVEMENT
+	
 	if (_xinput != 0 and _yinput != 0)
 	{
 		speed_walk = sqrt(sqr(speed_walk) + sqr(speed_walk)) / 2;
@@ -50,7 +198,10 @@ if is_warrior
 
 	if not swinging
 	{
-		move_and_collide(speed_walk * _xinput, speed_walk * _yinput, [obj_castle, obj_building, obj_tree, obj_player, obj_hitbox]);
+		if can_move
+		{
+			move_and_collide(speed_walk * _xinput, speed_walk * _yinput, objects_to_collide_with);
+		}
 
 		if a_held{
 			image_xscale = -1;
@@ -200,22 +351,6 @@ if is_warrior
 	hitbox_body.x = x;
 	hitbox_body.y = y;
 	*/
-	
-	if on_level == 0 and under_level = 1
-	{
-		depth = -y + 64;
-	}
-	else
-	{
-		depth = -y;
-	}
-	var _hit = instance_place(x, y, obj_hitbox_level_depth_trigger);
-	if _hit != noone
-	{
-		depth += abs(_hit.level - 4) * 64;
-		show_debug_message("yip");
-	}
-	show_debug_message("y: {0} depth: {1}", y, depth);
 }
 else if is_pawn
 {

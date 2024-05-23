@@ -24,6 +24,7 @@ a_held = false;
 s_held = false;
 d_held = false;
 
+can_move = true;
 moving = false;
 
 is_pawn = true;
@@ -42,9 +43,18 @@ hitbox_body = instance_create_depth(x, y, depth, obj_hitbox_warrior_body, {image
 hitbox_body.owner = id;
 */
 
+function is_touching_wall()
+{
+	return (instance_place(x, y, obj_hitbox_level_wall_1) or instance_place(x, y, obj_hitbox_level_wall_2) or instance_place(x, y, obj_hitbox_level_wall_3))
+}
+
 on_level = 0;
 on_stairs = 0;
+
 p_on_level = on_level;
 p_on_stairs = on_stairs;
 
-under_level = 0;
+falling = false;
+fall_counter = 0;
+
+objects_to_collide_with = [obj_hitbox, obj_player, obj_tree, obj_hitbox_level_wall_1]

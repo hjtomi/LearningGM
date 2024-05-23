@@ -1,9 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"obj_hitbox_level_depth_trigger",
+  "%Name":"obj_hitbox_level_surface_3",
   "eventList":[],
   "managed":true,
-  "name":"obj_hitbox_level_depth_trigger",
+  "name":"obj_hitbox_level_surface_3",
   "overriddenProperties":[],
   "parent":{
     "name":"Level",
@@ -23,9 +23,7 @@
   "physicsShape":1,
   "physicsShapePoints":[],
   "physicsStartAwake":true,
-  "properties":[
-    {"$GMObjectProperty":"v1","%Name":"level","filters":[],"listItems":[],"multiselect":false,"name":"level","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"1","varType":1,},
-  ],
+  "properties":[],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
