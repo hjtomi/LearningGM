@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"utility_scripts",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"PerlinNoise",
+    "path":"folders/Scripts/PerlinNoise.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

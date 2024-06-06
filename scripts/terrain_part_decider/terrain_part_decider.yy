@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"terrain_part_decider",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"terrain_part_decider",
+  "parent":{
+    "name":"MapGeneration",
+    "path":"folders/Scripts/MapGeneration.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

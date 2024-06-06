@@ -7,6 +7,8 @@ if (keyboard_check_pressed(ord("1")))
 	
 	swinging = false;
 	swing_again = false;
+	
+	instance_create_depth(x, y-48, depth, obj_particle_blood);
 } 
 else if (keyboard_check_pressed(ord("2"))) 
 {
@@ -16,6 +18,8 @@ else if (keyboard_check_pressed(ord("2")))
 	is_archer = false;
 	
 	chopping = false;
+	
+	instance_create_depth(x, y-48, depth, obj_particle_blood);
 } 
 else if (keyboard_check_pressed(ord("3"))) 
 {
@@ -25,6 +29,8 @@ else if (keyboard_check_pressed(ord("3")))
 	is_archer = true;
 	
 	chopping = false;
+	
+	instance_create_depth(x, y-48, depth, obj_particle_blood);
 }
 
 var click = mouse_check_button_pressed(mb_left);
@@ -131,23 +137,90 @@ if is_warrior
 	objects_to_collide_with = array_unique(objects_to_collide_with);
 	
 	// Under
-	var _under1 = instance_place(x, y, obj_hitbox_level_under_1)
-	var _under2 = instance_place(x, y, obj_hitbox_level_under_2)
-	var _under3 = instance_place(x, y, obj_hitbox_level_under_3)
+
+	ds_list_clear(under1_hitbox_list);
+	ds_list_clear(under2_hitbox_list);
+	ds_list_clear(under3_hitbox_list);
 	
-	if on_level == 0 and _under1 != noone
+	var _am_under1 = instance_place_list(x, y, obj_hitbox_level_under_1, under1_hitbox_list, false);
+	var _am_under2 = instance_place_list(x, y, obj_hitbox_level_under_2, under2_hitbox_list, false);
+	var _am_under3 = instance_place_list(x, y, obj_hitbox_level_under_3, under3_hitbox_list, false);
+	
+	if on_level == 0
 	{
-		depth += 3 * 64
+		if _am_under1 > 0
+		{
+			under = 1;
+		}
+		else
+		{
+			under = 0;
+			instance_destroy(my_under_hitbox);
+			my_under_hitbox = noone;
+		}
 	}
 	
-	if on_level == 1 and _under2 != noone
+	else if on_level == 1
 	{
-		depth += 2 * 64
+		if _am_under2 > 0
+		{
+			under = 2;
+		}
+		else
+		{
+			under = 0;
+			instance_destroy(my_under_hitbox);
+			my_under_hitbox = noone;
+		}
 	}
 	
-	if on_level == 2 and _under3 != noone
+	else if on_level == 2
 	{
-		depth += 64
+		if _am_under3 > 0
+		{
+			under = 3;
+		}
+		else
+		{
+			under = 0;
+			instance_destroy(my_under_hitbox);
+			my_under_hitbox = noone;
+		}
+	}
+	
+	// Sajat under hitbox
+	if under == 1
+	{
+		depth += 3 * 64;
+		if p_under != 1
+		{
+			instance_destroy(my_under_hitbox);
+			my_under_hitbox = instance_create_depth(x, y, depth, obj_hitbox_level_under_1, {image_xscale:2, image_yscale:2});
+		}
+	}
+	else if under == 2
+	{
+		depth += 2 * 64;
+		if p_under != 2
+		{
+			instance_destroy(my_under_hitbox);
+			my_under_hitbox = instance_create_depth(x, y, depth, obj_hitbox_level_under_2, {image_xscale:2, image_yscale:2});
+		}
+	}
+	else if under == 3
+	{
+		depth += 64;
+		if p_under != 3
+		{
+			instance_destroy(my_under_hitbox);
+			my_under_hitbox = instance_create_depth(x, y, depth, obj_hitbox_level_under_3, {image_xscale:2, image_yscale:2});
+		}
+	}
+	
+	if my_under_hitbox
+	{
+		my_under_hitbox.x = x-64;
+		my_under_hitbox.y = y-136;
 	}
 	
 	// Falling off
@@ -185,7 +258,7 @@ if is_warrior
 		}
 	}
 	
-	show_debug_message("y: {0}\ndepth: {1}\non_stairs: {2}\non_level: {3}\n", y, depth, on_stairs, on_level);
+	// show_debug_message("y: {0}\ndepth: {1}\non_stairs: {2}\non_level: {3}\nunder: {4}", y, depth, on_stairs, on_level, under);
 	
 	#endregion
 	

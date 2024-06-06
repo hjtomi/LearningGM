@@ -1,4 +1,4 @@
-function create_perlin_noise_grid(_width, _height, _X, _Y_start, _inc, _every_xth_element){
+function create_perlin_noise_grid(_width, _height, _X, _Y_start, _inc, _every_xth_element, _min_value, _max_value){
 
 var _noise_grid = ds_grid_create(ceil(_width / _every_xth_element), ceil(_height / _every_xth_element));
 var _insert_x = 0;
@@ -13,7 +13,7 @@ for (var col = 0; col < _width; col += 1) {
 		
 		for (var row = 0; row < _height; row += 1) {
 			
-			var _val = perlin_noise(_X, Y);
+			var _val = map_value(perlin_noise(_X, Y), -1, 1, _min_value, _max_value);
 			
 			if (row % _every_xth_element == 0){
 			

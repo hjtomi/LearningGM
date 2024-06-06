@@ -48,11 +48,25 @@ function is_touching_wall()
 	return (instance_place(x, y, obj_hitbox_level_wall_1) or instance_place(x, y, obj_hitbox_level_wall_2) or instance_place(x, y, obj_hitbox_level_wall_3))
 }
 
+// DEPTH SYSTEM
 on_level = 0;
 on_stairs = 0;
+under = 0;
 
 p_on_level = on_level;
 p_on_stairs = on_stairs;
+p_under = under;
+
+under1_hitbox_list = ds_list_create();
+under2_hitbox_list = ds_list_create();
+under3_hitbox_list = ds_list_create();
+object_under1_hitbox_list = ds_list_create();
+object_under2_hitbox_list = ds_list_create();
+object_under3_hitbox_list = ds_list_create();
+
+my_under_hitbox = noone;
+under_wall = false;
+// array_any();
 
 falling = false;
 fall_counter = 0;
