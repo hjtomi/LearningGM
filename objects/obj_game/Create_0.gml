@@ -97,7 +97,7 @@ repeat(ds_grid_width(_complex_grid))
 				if _above_value >= 7 and _below_value >= 7 and _left_value >= 7 and _right_value >= 7
 				{
 					tilemap_set(_new_tileset, tilemap.rock, i, 0);
-					// instance_create_depth(i*64, j*64, -10000, obj_hitbox_level_wall_1);
+					instance_create_depth(i*64, j*64, -10000, obj_hitbox_level_wall_1);
 				}
 				// Top left
 				else if _above_value < 7 and _left_value < 7 and _right_value >= 7 and _below_value >= 7
@@ -191,7 +191,7 @@ repeat(ds_grid_width(_complex_grid))
 				if _above_value >= 7 and _below_value >= 7 and _left_value >= 7 and _right_value >= 7
 				{
 					tilemap_set(layer_tilemap_get_id(layer_get_id(string(j))), tilemap.rock, i, 0);
-					// instance_create_depth(i*64, j*64, -10000, obj_hitbox_level_wall_1);
+					instance_create_depth(i*64, j*64, -10000, obj_hitbox_level_wall_1);
 				}
 				// Top left
 				else if _above_value < 7 and _left_value < 7 and _right_value >= 7 and _below_value >= 7
@@ -278,7 +278,10 @@ repeat(ds_grid_width(_complex_grid))
 				}
 			}
 		}
-		
+		else 
+		{
+			tilemap_set(layer_tilemap_get_id(layer_get_id("Tiles_ground")), tilemap.grass, i, j);
+		}
 		j++;
 	}
 	i++;

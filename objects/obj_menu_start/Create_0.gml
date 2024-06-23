@@ -1,4 +1,4 @@
 in = false;
-start_x = 1920/2;
-start_y = 1080/2;
+start_x = 200;
+start_y = 100;
 clicked = false;
